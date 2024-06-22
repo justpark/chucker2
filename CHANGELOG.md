@@ -19,7 +19,7 @@ Please add your entries according to this format.
 
 ### Changed
 
-## Version 4.0.0 *(2023-06-29)*
+## Version 4.1.1 *(2023-06-29)*
 
 ### Added
 * Add `skipPaths` to selectively skip requests from Chucker [#970]
