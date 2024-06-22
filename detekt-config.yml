@@ -33,3 +33,7 @@ style:
     excludeReturnFromLambda: true
   UnusedImports:
     active: true
+
+exceptions:
+  SwallowedException:
+    active: false

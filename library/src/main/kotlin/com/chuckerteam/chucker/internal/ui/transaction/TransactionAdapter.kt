@@ -21,6 +21,7 @@ import javax.net.ssl.HttpsURLConnection
 
 internal class TransactionAdapter internal constructor(
     context: Context,
+    private val onEditResponseClick: (Long) -> Unit,
     private val onTransactionClick: (Long) -> Unit,
 ) : ListAdapter<HttpTransactionTuple, TransactionAdapter.TransactionViewHolder>(
         TransactionDiffCallback,
@@ -35,6 +36,7 @@ internal class TransactionAdapter internal constructor(
     private val color500: Int = ContextCompat.getColor(context, R.color.chucker_status_500)
     private val color400: Int = ContextCompat.getColor(context, R.color.chucker_status_400)
     private val color300: Int = ContextCompat.getColor(context, R.color.chucker_status_300)
+    private val colorEdited: Int = ContextCompat.getColor(context, R.color.chucker_status_edited)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -63,6 +65,11 @@ internal class TransactionAdapter internal constructor(
             itemView.setOnClickListener {
                 transactionId?.let {
                     onTransactionClick.invoke(it)
+                }
+            }
+            itemBinding.edit.setOnClickListener {
+                transactionId?.let {
+                    onEditResponseClick.invoke(it)
                 }
             }
         }
@@ -112,6 +119,7 @@ internal class TransactionAdapter internal constructor(
         private fun setStatusColor(transaction: HttpTransactionTuple) {
             val color: Int =
                 when {
+                    (transaction.status === HttpTransaction.Status.Edited) -> colorEdited
                     (transaction.status === HttpTransaction.Status.Failed) -> colorError
                     (transaction.status === HttpTransaction.Status.Requested) -> colorRequested
                     (transaction.responseCode == null) -> colorDefault

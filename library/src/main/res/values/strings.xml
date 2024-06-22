@@ -70,4 +70,10 @@
     <string name="chucker_graphql_operation_is_empty"> &lt;Unable to discover GraphQL operation name&gt;</string>
     <string name="chucker_scroll_buttons_for_search">Buttons to scroll the search items</string>
     <string name="chucker_search_results_title">Search Results:</string>
+    <string name="chucker_edit_response">edit response</string>
+    <string name="chucker_edit_response_code_title">Response Code</string>
+    <string name="chucker_title_response_body_json">Response body JSON:</string>
+    <string name="chucker_remove_mock_response">Remove Mock Response</string>
+    <string name="chucker_add_mock_response">Add Mock Response</string>
+    <string name="chucker_json_is_not_valid">JSON IS NOT VALID YOU ADORABLE MUPPET</string>
 </resources>

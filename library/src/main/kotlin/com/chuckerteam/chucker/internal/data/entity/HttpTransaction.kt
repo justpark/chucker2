@@ -61,6 +61,7 @@ internal class HttpTransaction(
     @ColumnInfo(name = "responseImageData") var responseImageData: ByteArray?,
     @ColumnInfo(name = "graphQlDetected") var graphQlDetected: Boolean = false,
     @ColumnInfo(name = "graphQlOperationName") var graphQlOperationName: String?,
+    @ColumnInfo(name = "mockedThisResponse") var mockedThisResponse: Boolean = false,
 ) {
     @Ignore
     constructor() : this(
@@ -90,12 +91,14 @@ internal class HttpTransaction(
         responseBody = null,
         responseImageData = null,
         graphQlOperationName = null,
+        mockedThisResponse = false,
     )
 
     enum class Status {
         Requested,
         Complete,
         Failed,
+        Edited,
     }
 
     val status: Status

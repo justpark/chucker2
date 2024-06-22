@@ -11,6 +11,7 @@
     <color name="chucker_color_on_background">#000000</color>
     <color name="chucker_color_on_surface">#000000</color>
     <color name="chucker_color_on_error">#ffffff</color>
+    <color name="chucker_status_edited">#006400</color>
 
     <color name="chucker_status_default">#212121</color>
     <color name="chucker_status_requested">#9E9E9E</color>

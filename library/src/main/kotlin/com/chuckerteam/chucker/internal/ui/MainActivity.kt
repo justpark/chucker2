@@ -85,7 +85,9 @@ internal class MainActivity :
 
         mainBinding = ChuckerActivityMainBinding.inflate(layoutInflater)
         transactionsAdapter =
-            TransactionAdapter(this) { transactionId ->
+            TransactionAdapter(this, { transactionId ->
+                ChuckerEditResponseActivity.start(this, transactionId)
+            }) { transactionId ->
                 TransactionActivity.start(this, transactionId)
             }
 

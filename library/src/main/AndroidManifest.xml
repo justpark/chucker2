@@ -23,6 +23,10 @@
             android:theme="@style/Chucker.Theme" />
 
         <activity
+            android:name="com.chuckerteam.chucker.internal.ui.ChuckerEditResponseActivity"
+            android:theme="@style/Chucker.Theme" />
+
+        <activity
             android:name="com.chuckerteam.chucker.internal.ui.transaction.TransactionActivity"
             android:parentActivityName="com.chuckerteam.chucker.internal.ui.MainActivity"
             android:theme="@style/Chucker.Theme" />

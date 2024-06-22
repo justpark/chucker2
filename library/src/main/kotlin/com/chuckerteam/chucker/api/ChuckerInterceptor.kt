@@ -2,6 +2,7 @@ package com.chuckerteam.chucker.api
 
 import android.content.Context
 import androidx.annotation.VisibleForTesting
+import com.chuckerteam.chucker.internal.data.cache.mockApiCache
 import com.chuckerteam.chucker.internal.data.entity.HttpTransaction
 import com.chuckerteam.chucker.internal.support.CacheDirectoryProvider
 import com.chuckerteam.chucker.internal.support.PlainTextDecoder
@@ -10,6 +11,7 @@ import com.chuckerteam.chucker.internal.support.ResponseProcessor
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.Response
+import okhttp3.ResponseBody.Companion.toResponseBody
 import java.io.IOException
 
 /**
@@ -71,12 +73,13 @@ public class ChuckerInterceptor private constructor(
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val transaction = HttpTransaction()
+        val mockApiCache = mockApiCache.snapshot()
         val request = chain.request()
         val shouldProcessTheRequest = !skipPaths.any { it == request.url.encodedPath }
         if (shouldProcessTheRequest) {
             requestProcessor.process(request, transaction)
         }
-        val response =
+        val response1 =
             try {
                 chain.proceed(request)
             } catch (e: IOException) {
@@ -84,6 +87,19 @@ public class ChuckerInterceptor private constructor(
                 collector.onResponseReceived(transaction)
                 throw e
             }
+
+        val shortPath = request.url.toString().split("?")[0] ?: ""
+        val response =
+            if (mockApiCache.contains(shortPath)) {
+                transaction.mockedThisResponse = true
+                response1.newBuilder().body(
+                    mockApiCache[shortPath]!!.jsonStringBody
+                        .toResponseBody(response1.body?.contentType()),
+                ).build()
+            } else {
+                response1
+            }
+
         return if (shouldProcessTheRequest) {
             responseProcessor.process(response, transaction)
         } else {

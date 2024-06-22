@@ -82,7 +82,6 @@ class MainActivity : AppCompatActivity() {
                 .detectDiskReads()
                 .detectDiskWrites()
                 .penaltyLog()
-                .penaltyDeath()
                 .build(),
         )
     }
